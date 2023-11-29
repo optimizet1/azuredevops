@@ -1,0 +1,40 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "location": {
+        "value": "West US 3"
+      },
+      "webPubSubName": {
+        "value": "MyWebPubSubNamespace"
+      },
+      "skuName": {
+        "value": "Standard_S1"
+      },
+      "skuCapacity": {
+        "value": 1
+      },
+      "functionAppName": {
+        "value": "MyFunctionApp"
+      },
+      "appServicePlanName": {
+        "value": "MyAppServicePlan"
+      },
+      "appServicePlanSkuName": {
+        "value": "Y1"
+      },
+      "appServicePlanSkuTier": {
+        "value": "Dynamic"
+      },
+      "storageAccountName": {
+        "value": "mystorageaccount"
+      },
+      "storageAccountResourceId": {
+        "value": "/subscriptions/yourSubscriptionId/resourceGroups/yourResourceGroup/providers/Microsoft.Storage/storageAccounts/mystorageaccount"
+      },
+      "webPubSubResourceId": {
+        "value": "/subscriptions/yourSubscriptionId/resourceGroups/yourResourceGroup/providers/Microsoft.WebPubSub/namespaces/MyWebPubSubNamespace"
+      }
+    }
+  }
+  

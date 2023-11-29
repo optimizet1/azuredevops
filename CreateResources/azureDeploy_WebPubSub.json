@@ -1,0 +1,122 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "resources": [
+      {
+        "type": "Microsoft.WebPubSub/namespaces",
+        "apiVersion": "2020-01-01",
+        "name": "[parameters('webPubSubName')]",
+        "location": "[parameters('location')]",
+        "sku": {
+          "name": "[parameters('skuName')]",
+          "capacity": "[parameters('skuCapacity')]"
+        },
+        "properties": {}
+      },
+      {
+        "type": "Microsoft.Web/sites",
+        "apiVersion": "2019-08-01",
+        "name": "[parameters('functionAppName')]",
+        "location": "[parameters('location')]",
+        "kind": "functionapp",
+        "properties": {
+          "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('appServicePlanName'))]",
+          "siteConfig": {
+            "appSettings": [
+              {
+                "name": "AzureWebJobsStorage",
+                "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', parameters('storageAccountName'), ';AccountKey=', listKeys(parameters('storageAccountResourceId'), '2019-06-01').keys[0].value)]"
+              },
+              {
+                "name": "WEBPUBSUB_APPSETTING",
+                "value": "[reference(parameters('webPubSubResourceId')).primaryConnectionString]"
+              }
+            ]
+          }
+        },
+        "dependsOn": [
+          "[resourceId('Microsoft.Web/serverfarms', parameters('appServicePlanName'))]",
+          "[resourceId('Microsoft.WebPubSub/namespaces', parameters('webPubSubName'))]"
+        ]
+      },
+      {
+        "type": "Microsoft.Web/serverfarms",
+        "apiVersion": "2018-02-01",
+        "name": "[parameters('appServicePlanName')]",
+        "location": "[parameters('location')]",
+        "sku": {
+          "name": "[parameters('appServicePlanSkuName')]",
+          "tier": "[parameters('appServicePlanSkuTier')]"
+        }
+      }
+    ],
+    "parameters": {
+      "location": {
+        "type": "string",
+        "metadata": {
+          "description": "Azure region for deployment"
+        }
+      },
+      "webPubSubName": {
+        "type": "string",
+        "metadata": {
+          "description": "Azure Web Pub Sub namespace name"
+        }
+      },
+      "skuName": {
+        "type": "string",
+        "metadata": {
+          "description": "SKU name for the Web Pub Sub namespace"
+        }
+      },
+      "skuCapacity": {
+        "type": "int",
+        "metadata": {
+          "description": "SKU capacity for the Web Pub Sub namespace"
+        }
+      },
+      "functionAppName": {
+        "type": "string",
+        "metadata": {
+          "description": "Azure Function App name"
+        }
+      },
+      "appServicePlanName": {
+        "type": "string",
+        "metadata": {
+          "description": "App Service Plan name for the Function App"
+        }
+      },
+      "appServicePlanSkuName": {
+        "type": "string",
+        "metadata": {
+          "description": "App Service Plan SKU name"
+        }
+      },
+      "appServicePlanSkuTier": {
+        "type": "string",
+        "metadata": {
+          "description": "App Service Plan SKU tier"
+        }
+      },
+      "storageAccountName": {
+        "type": "string",
+        "metadata": {
+          "description": "Storage Account name for the Function App"
+        }
+      },
+      "storageAccountResourceId": {
+        "type": "string",
+        "metadata": {
+          "description": "Resource ID of the Storage Account for the Function App"
+        }
+      },
+      "webPubSubResourceId": {
+        "type": "string",
+        "metadata": {
+          "description": "Resource ID of the Web Pub Sub namespace"
+        }
+      }
+    }
+  }
+  

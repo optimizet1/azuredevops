@@ -1,0 +1,160 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "resources": [
+      {
+        "type": "Microsoft.Resources/resourceGroups",
+        "apiVersion": "2019-10-01",
+        "location": "[parameters('location')]",
+        "name": "[parameters('rgName')]",
+        "properties": {}
+      },
+      {
+        "type": "Microsoft.Storage/storageAccounts",
+        "apiVersion": "2019-06-01",
+        "name": "[parameters('storageAccountName')]",
+        "location": "[parameters('location')]",
+        "sku": {
+          "name": "[parameters('storageAccountSku')]"
+        },
+        "kind": "StorageV2"
+      },
+      {
+        "type": "Microsoft.Web/sites",
+        "apiVersion": "2019-08-01",
+        "name": "[parameters('functionAppName')]",
+        "location": "[parameters('location')]",
+        "kind": "functionapp",
+        "properties": {
+          "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('appServicePlanName'))]",
+          "siteConfig": {
+            "appSettings": [
+              {
+                "name": "FUNCTIONS_WORKER_RUNTIME",
+                "value": "node"
+              }
+            ]
+          }
+        },
+        "dependsOn": [
+          "[resourceId('Microsoft.Web/serverfarms', parameters('appServicePlanName'))]"
+        ]
+      },
+      {
+        "type": "Microsoft.Web/serverfarms",
+        "apiVersion": "2018-02-01",
+        "name": "[parameters('appServicePlanName')]",
+        "location": "[parameters('location')]",
+        "sku": {
+          "name": "[parameters('appServicePlanSku')]",
+          "tier": "[parameters('appServicePlanTier')]"
+        }
+      },
+      {
+        "type": "Microsoft.WebPubSub/namespaces",
+        "apiVersion": "2020-01-01",
+        "name": "[parameters('webPubSubName')]",
+        "location": "[parameters('location')]",
+        "sku": {
+          "name": "[parameters('webPubSubSku')]"
+        }
+      },
+      {
+        "type": "Microsoft.Network/frontDoors",
+        "apiVersion": "2020-05-01",
+        "name": "[parameters('frontDoorName')]",
+        "location": "[parameters('location')]",
+        "properties": {
+          "backendPools": [],
+          "frontendEndpoints": [],
+          "loadBalancingSettings": [],
+          "routingRules": []
+        }
+      },
+      {
+        "type": "Microsoft.Insights/components",
+        "apiVersion": "2020-02-02",
+        "name": "[parameters('appInsightsName')]",
+        "location": "[parameters('location')]",
+        "kind": "web",
+        "properties": {
+          "Application_Type": "web"
+        }
+      }
+    ],
+    "parameters": {
+      "location": {
+        "type": "string",
+        "metadata": {
+          "description": "Azure region for deployment"
+        }
+      },
+      "rgName": {
+        "type": "string",
+        "metadata": {
+          "description": "Resource Group name"
+        }
+      },
+      "storageAccountName": {
+        "type": "string",
+        "metadata": {
+          "description": "Storage Account name"
+        }
+      },
+      "storageAccountSku": {
+        "type": "string",
+        "metadata": {
+          "description": "Storage Account SKU"
+        }
+      },
+      "functionAppName": {
+        "type": "string",
+        "metadata": {
+          "description": "Function App name"
+        }
+      },
+      "appServicePlanName": {
+        "type": "string",
+        "metadata": {
+          "description": "App Service Plan name for the Function App"
+        }
+      },
+      "appServicePlanSku": {
+        "type": "string",
+        "metadata": {
+          "description": "App Service Plan SKU"
+        }
+      },
+      "appServicePlanTier": {
+        "type": "string",
+        "metadata": {
+          "description": "App Service Plan tier"
+        }
+      },
+      "webPubSubName": {
+        "type": "string",
+        "metadata": {
+          "description": "Web PubSub namespace name"
+        }
+      },
+      "webPubSubSku": {
+        "type": "string",
+        "metadata": {
+          "description": "Web PubSub SKU"
+        }
+      },
+      "frontDoorName": {
+        "type": "string",
+        "metadata": {
+          "description": "Front Door name"
+        }
+      },
+      "appInsightsName": {
+        "type": "string",
+        "metadata": {
+          "description": "Application Insights name"
+        }
+      }
+    }
+  }
+  

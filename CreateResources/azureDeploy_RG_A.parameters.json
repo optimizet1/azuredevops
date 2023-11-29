@@ -1,0 +1,43 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "location": {
+        "value": "West US 3"
+      },
+      "rgName": {
+        "value": "RG-A"
+      },
+      "storageAccountName": {
+        "value": "mystorageaccounta"
+      },
+      "storageAccountSku": {
+        "value": "Standard_LRS"
+      },
+      "functionAppName": {
+        "value": "MyFunctionAppA"
+      },
+      "appServicePlanName": {
+        "value": "MyAppServicePlanA"
+      },
+      "appServicePlanSku": {
+        "value": "Y1"
+      },
+      "appServicePlanTier": {
+        "value": "Dynamic"
+      },
+      "webPubSubName": {
+        "value": "MyWebPubSubA"
+      },
+      "webPubSubSku": {
+        "value": "Standard_S1"
+      },
+      "frontDoorName": {
+        "value": "MyFrontDoorA"
+      },
+      "appInsightsName": {
+        "value": "MyAppInsightsA"
+      }
+    }
+  }
+  

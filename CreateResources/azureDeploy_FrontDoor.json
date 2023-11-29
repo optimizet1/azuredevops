@@ -1,0 +1,103 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "resources": [
+      {
+        "type": "Microsoft.Network/frontDoors",
+        "apiVersion": "2020-05-01",
+        "name": "[parameters('frontDoorName')]",
+        "location": "[parameters('location')]",
+        "properties": {
+          "backendPools": [
+            {
+              "name": "functionAppBackendPool",
+              "properties": {
+                "backends": [
+                  {
+                    "address": "[concat(parameters('functionAppName'), '.azurewebsites.net')]",
+                    "httpPort": 80
+                  }
+                ],
+                "healthProbeSettings": [
+                  {
+                    "name": "default",
+                    "path": "/",
+                    "protocol": "Http",
+                    "pickHostNameFromBackendHttpSettings": true
+                  }
+                ]
+              }
+            }
+          ],
+          "frontendEndpoints": [
+            {
+              "name": "default",
+              "properties": {
+                "hostName": "[concat(parameters('frontDoorName'), '.azurefd.net')]",
+                "sessionAffinityEnabledState": "Enabled",
+                "sessionAffinityTtlSeconds": 0,
+                "webApplicationFirewallPolicyLink": null
+              }
+            }
+          ],
+          "loadBalancingSettings": [
+            {
+              "name": "default",
+              "properties": {
+                "sampleSize": 4,
+                "successfulSamplesRequired": 2,
+                "additionalLatencyMilliseconds": 0
+              }
+            }
+          ],
+          "routingRules": [
+            {
+              "name": "routeToFunctionApp",
+              "properties": {
+                "frontendEndpoints": [
+                  {
+                    "id": "[concat(resourceId('Microsoft.Network/frontDoors', parameters('frontDoorName')), '/frontendEndpoints/default')]"
+                  }
+                ],
+                "acceptedProtocols": [
+                  "Http",
+                  "Https"
+                ],
+                "patternsToMatch": [
+                  {
+                    "matchType": "Wildcard",
+                    "pattern": "/*"
+                  }
+                ],
+                "routeConfiguration": {
+                  "routeType": "Forward",
+                  "forwardingProtocol": "MatchRequest"
+                }
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "parameters": {
+      "location": {
+        "type": "string",
+        "metadata": {
+          "description": "Azure region for deployment"
+        }
+      },
+      "frontDoorName": {
+        "type": "string",
+        "metadata": {
+          "description": "Azure Front Door name"
+        }
+      },
+      "functionAppName": {
+        "type": "string",
+        "metadata": {
+          "description": "Azure Function App name"
+        }
+      }
+    }
+  }
+  

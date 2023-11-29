@@ -1,0 +1,62 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "resources": [
+      {
+        "type": "Microsoft.Resources/resourceGroups",
+        "apiVersion": "2019-10-01",
+        "location": "[parameters('location')]",
+        "name": "[parameters('rgNameA')]",
+        "properties": {}
+      },
+      {
+        "type": "Microsoft.Storage/storageAccounts",
+        "apiVersion": "2019-06-01",
+        "name": "[parameters('storageAccountNameA')]",
+        "location": "[parameters('location')]",
+        "sku": {
+          "name": "Standard_LRS"
+        },
+        "kind": "StorageV2"
+      },
+      {
+        "type": "Microsoft.Web/sites",
+        "apiVersion": "2019-08-01",
+        "name": "[parameters('functionAppNameA')]",
+        "location": "[parameters('location')]",
+        "kind": "functionapp",
+        "properties": {
+          // Additional properties for the function app
+        }
+      }
+      // Add more resource definitions for other resources in RG-A
+    ],
+    "parameters": {
+      "location": {
+        "type": "string",
+        "metadata": {
+          "description": "Azure region for deployment"
+        }
+      },
+      "rgNameA": {
+        "type": "string",
+        "metadata": {
+          "description": "Resource Group A name"
+        }
+      },
+      "storageAccountNameA": {
+        "type": "string",
+        "metadata": {
+          "description": "Storage Account A name"
+        }
+      },
+      "functionAppNameA": {
+        "type": "string",
+        "metadata": {
+          "description": "Function App A name"
+        }
+      }
+      // Add more parameters for other resources in RG-A
+    }
+  }
+  

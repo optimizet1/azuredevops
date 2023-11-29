@@ -1,0 +1,20 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "location": {
+        "value": "West US 3"
+      },
+      "rgNameA": {
+        "value": "RG-B"
+      },
+      "storageAccountNameA": {
+        "value": "mystorageaccountb"
+      },
+      "functionAppNameA": {
+        "value": "MyFunctionAppB"
+      }
+      // Add values for additional parameters as needed
+    }
+  }
+  
