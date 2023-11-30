@@ -3,13 +3,6 @@
     "contentVersion": "1.0.0.0",
     "resources": [
       {
-        "type": "Microsoft.Resources/resourceGroups",
-        "apiVersion": "2019-10-01",
-        "location": "[parameters('location')]",
-        "name": "[parameters('rgName')]",
-        "properties": {}
-      },
-      {
         "type": "Microsoft.Storage/storageAccounts",
         "apiVersion": "2019-06-01",
         "name": "[parameters('storageAccountName')]",
@@ -63,27 +56,23 @@
         "type": "Microsoft.Network/frontDoors",
         "apiVersion": "2020-05-01",
         "name": "[parameters('frontDoorName')]",
-        "location": "[parameters('location')]",
+        "location": "[parameters('locationfd')]",
         "properties": {
           "backendPools": [],
           "frontendEndpoints": [],
           "loadBalancingSettings": [],
           "routingRules": []
         }
-      },
-      {
-        "type": "Microsoft.Insights/components",
-        "apiVersion": "2020-02-02",
-        "name": "[parameters('appInsightsName')]",
-        "location": "[parameters('location')]",
-        "kind": "web",
-        "properties": {
-          "Application_Type": "web"
-        }
       }
+      
     ],
     "parameters": {
       "location": {
+        "type": "string",
+        "metadata": {
+          "description": "Azure region for deployment"
+        }
+      },"locationfd": {
         "type": "string",
         "metadata": {
           "description": "Azure region for deployment"

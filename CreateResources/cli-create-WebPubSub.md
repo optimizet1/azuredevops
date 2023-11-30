@@ -1,6 +1,6 @@
 # Variables
 resourceGroupName="YourResourceGroup"
-location="West US 3"
+location="westus3"
 webPubSubName="YourWebPubSubNamespace"
 functionAppName="YourFunctionApp"
 appServicePlanName="YourAppServicePlan"

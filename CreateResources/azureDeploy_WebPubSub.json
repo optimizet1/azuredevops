@@ -6,7 +6,7 @@
         "type": "Microsoft.WebPubSub/namespaces",
         "apiVersion": "2020-01-01",
         "name": "[parameters('webPubSubName')]",
-        "location": "[parameters('location')]",
+        "location": "[resourceGroup().location]",
         "sku": {
           "name": "[parameters('skuName')]",
           "capacity": "[parameters('skuCapacity')]"
@@ -17,7 +17,7 @@
         "type": "Microsoft.Web/sites",
         "apiVersion": "2019-08-01",
         "name": "[parameters('functionAppName')]",
-        "location": "[parameters('location')]",
+        "location": "[resourceGroup().location]",
         "kind": "functionapp",
         "properties": {
           "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('appServicePlanName'))]",
@@ -43,7 +43,7 @@
         "type": "Microsoft.Web/serverfarms",
         "apiVersion": "2018-02-01",
         "name": "[parameters('appServicePlanName')]",
-        "location": "[parameters('location')]",
+        "location": "[resourceGroup().location]",
         "sku": {
           "name": "[parameters('appServicePlanSkuName')]",
           "tier": "[parameters('appServicePlanSkuTier')]"

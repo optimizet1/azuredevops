@@ -2,7 +2,7 @@
 rg_a="RG-A"
 rg_b="RG-B"
 rg_c="RG-C"
-location="YourAzureRegion"
+location="westus3"
 storage_account_sku="Standard_LRS"
 function_runtime="node"
 

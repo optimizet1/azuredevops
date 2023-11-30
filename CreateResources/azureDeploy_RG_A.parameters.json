@@ -4,9 +4,12 @@
     "parameters": {
       "location": {
         "value": "westus3"
+      },      
+      "locationfd": {
+        "value": "global"
       },
       "rgName": {
-        "value": "RG-A"
+        "value": "RG-A2"
       },
       "storageAccountName": {
         "value": "mystorageaccounta"
@@ -30,7 +33,7 @@
         "value": "MyWebPubSubA"
       },
       "webPubSubSku": {
-        "value": "Standard_S1"
+        "value": "Free_F1"
       },
       "frontDoorName": {
         "value": "MyFrontDoorA"

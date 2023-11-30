@@ -6,7 +6,7 @@
         "type": "Microsoft.Network/frontDoors",
         "apiVersion": "2020-05-01",
         "name": "[parameters('frontDoorName')]",
-        "location": "[parameters('location')]",
+        "location": "[resourceGroup().location]",
         "properties": {
           "backendPools": [
             {
